@@ -1,0 +1,59 @@
+Voicila Alexandra
+
+Functia touch
+Am alocat memorie pentru fisier, pentru numele acestuia si am testat cazurile particulare: daca directorul parinte nu are alte fisiere 
+(fisierul va deveni head-ul listei de fisiere) sau daca numele fisierului exista deja in lista (se va afisa mesajul cerut si se va dezaloca
+memoria alocata fisierului). Daca nu se intalnesc aceste cazuri, adaug fisierul ca nod in lista de fisiere a directorul parinte.
+
+Functia mkdir
+Analog functiei de mai sus. Initializez, in plus, lista de fisiere a directorului nou creat la NULL.
+
+Functia ls
+Parcurg pe rand lista de directoare, respectiv de fisiere, afisand fiecare nod pe cate o linie.
+
+Functia rm
+Testez intai ca lista de fisiere sa nu fie nula. Un alt caz particular este cel in care fisierul ce trebuie sters este primul. Altfel, 
+parcurg lista de fisiere pana cand gasesc numele primit ca parametru, si sterg nodul, folosindu-ma de pointerul x pentru a elibera memoria. 
+
+Functia rmdir
+Pentru stergerea unui director, m-am folosit de o functie suplimentara recursiva rmdir_rec. In aceasta, am folosit functia rm pentru a 
+sterge lista de fisiere, iar pentru lista de directoare, pentru fiecare nod am apelat recursiv functia prezenta. In functia principala 
+rmdir, similar functiei rm, am testat cazurile speciale: cand nu exista directorul cu numele cerut si cand acesta este primul, respectiv 
+ultimul din lista, dupa care am sters directorul si i-am eliberat memoria.
+
+Functia cd
+Daca numele primit este "..", schimb adresa directorului curent in cea a directorului parinte. Analizez cazurile speciale in care 
+directorul curent este null si in care nu se gaseste director cu numele cautat. Altfel, modific adresa directorului actual in cea a 
+directorului cu numele primit ca parametru. In main, apelez functia, trimitand pentru primul parametru adresa acestuia, folosind operatorul
+"&". 
+
+Functia tree
+Incepand cu level = 0, asa cum il initializez cand apelez functia tree in main, pentru fiecare director, respectiv fisier afisez inaintea 
+numelui un numar de level * 4 spatii. Cu cat patrund mai adanc in ierarhie, incrementez variabila level, apeland functia recursiv.
+
+Functia pwd
+Pentru afisarea caii direcorului curent, am folosit o modalitate recursiva. Cand ajung la un director fara parinte, aloc memorie pentru 
+stringul ce trebuie returnat, in care pun "/" si numele acestui director, apoi functia se opreste. Pentru operatiile cu string-uri ma 
+folosesc de functiile strcat si strcpy.
+
+Functia stop
+In functia stop, elberez toata memoria directorului primit ca parametru, stergandu-l recursiv cu functia rmdir_rec.
+
+Functia mv
+Pentru functia mv, am parcurs intai listele de fisiere si de directoare pentru a determina daca "oldname" apartine unui fisier(ok = 2) sau
+unui director(ok = 1). Am parcurs din nou listele pentru a testa cazul in care "newname" este deja folosit, returnand in caz pozitiv
+mesajul cerut. Apoi, am analizat cele 2 cazuri separat. In situatia in care este vorba despre un director, am creat intai un nou director
+cu nume "newname", neputand sa ma folosesc de functia mkdir pentru ca aceasta nu-mi returna referinta. Am adaugat acest director in lista
+de directoare a parintelui, am mutat toate elementele din directorul vechi in cel nou si ulterior, l-am sters pe cel vechi, eliberandu-i
+memoria. In cazul in care este vorba de fisier, am facut acelasi lucru, nemaifiind nevoie sa mai mut elemente.
+
+Main
+In main, am creat directorul home in aceeasi maniera ca mai sus, fara a putea folosi functia mkdir. Am impartit stringul citit in input in
+substringuri cu ajutorul functiei strtok. Pentru fiecare comanda, am testat carei functii ii corespunde primul substring delimitat. Daca
+functia cerea si un al doilea parametru, am impartit din nou stringul. In cazul functiei mv apare un al treilea parametru, iar la functia
+pwd trebuie afisat un string pentru care trebuie alocata si dezalocata ulterior memorie. 
+Am folosit o bucla infinita, din care se iese doar prin aparitia comenzii "stop". Folosesc directorul home_princ in loc de home pentru
+eliberarea memoriei pentru a ma asigura ca indiferent de functiile apelate, se elibereaza toata memoria.
+
+
+ 
